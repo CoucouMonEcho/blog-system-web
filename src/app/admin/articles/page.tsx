@@ -32,14 +32,15 @@ export default function AdminArticlesPage() {
 
   return (
     <section className="space-y-4">
-      <div className="flex justify-between">
+      <div className="card flex justify-between items-center">
         <h2 className="text-xl font-semibold">文章管理</h2>
         <Button type="primary" onClick={() => setCreateVisible(true)}>
           新增文章
         </Button>
       </div>
 
-      <Table
+      <div className="card">
+        <Table
         rowKey="id"
         loading={loading}
         dataSource={dataSource}
@@ -72,9 +73,10 @@ export default function AdminArticlesPage() {
           }
         ]}
         pagination={false}
-      />
+        />
+      </div>
 
-      <div className="flex justify-end">
+      <div className="card flex justify-end">
         <Pagination
           current={page}
           pageSize={pageSize}

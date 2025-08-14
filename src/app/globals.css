@@ -10,4 +10,49 @@ body {
   @apply bg-white text-gray-900;
 }
 
+@layer base {
+  :root {
+    --brand-ink: #0f172a; /* slate-900 */
+    --brand-subtle: #64748b; /* slate-500 */
+    --brand-border: #e5e7eb; /* gray-200 */
+    --brand-bg: #ffffff;
+  }
+  * {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6;
+  }
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-5;
+  }
+  .section-title {
+    @apply text-2xl font-semibold text-slate-900;
+  }
+  .muted {
+    @apply text-slate-500;
+  }
+  .nav-link {
+    @apply text-slate-700 hover:text-slate-900 hover:underline;
+  }
+}
+
+/* Minimal prose styling without extra plugin */
+.prose h1, .prose h2, .prose h3 {
+  color: var(--brand-ink);
+  margin: 1rem 0 .5rem;
+  line-height: 1.25;
+}
+.prose p {
+  color: var(--brand-subtle);
+  margin: .5rem 0 1rem;
+}
+.prose ul {
+  margin: .5rem 0 1rem 1.25rem;
+  list-style: disc;
+}
+
 

@@ -22,10 +22,12 @@ export default function AdminDashboardPage() {
 
   return (
     <section className="space-y-4">
-      <Typography.Title level={3}>管理后台</Typography.Title>
+      <div className="card">
+        <Typography.Title level={3} style={{ margin: 0 }}>管理后台</Typography.Title>
+      </div>
 
       {!token && (
-        <Form layout="inline" onFinish={onAdminLogin} style={{ gap: 8 }}>
+        <Form className="card" layout="inline" onFinish={onAdminLogin} style={{ gap: 8 }}>
           <Form.Item name="username" rules={[{ required: true }]}>
             <Input placeholder="admin" />
           </Form.Item>
@@ -38,13 +40,14 @@ export default function AdminDashboardPage() {
         </Form>
       )}
 
-      <div className="flex gap-2">
+      <div className="card flex gap-2">
         <Button onClick={fetchUsers} disabled={!token}>
           加载用户列表
         </Button>
       </div>
 
-      <Table
+      <div className="card">
+        <Table
         rowKey="id"
         dataSource={users}
         columns={[
@@ -54,7 +57,8 @@ export default function AdminDashboardPage() {
           { title: '角色', dataIndex: 'role' }
         ]}
         pagination={false}
-      />
+        />
+      </div>
     </section>
   )
 }

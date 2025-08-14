@@ -20,8 +20,8 @@ export default function PostsPage() {
   })
 
   return (
-    <main className="max-w-5xl mx-auto p-6 space-y-4">
-      <h2 className="text-2xl font-semibold">文章列表</h2>
+    <div className="space-y-4">
+      <h2 className="section-title">文章列表</h2>
       <div className="flex gap-2">
         <Input.Search
           placeholder="搜索关键字"
@@ -32,7 +32,7 @@ export default function PostsPage() {
           loading={isLoading}
         />
       </div>
-      <ul className="divide-y">
+      <ul className="card divide-y">
         {(data?.list || []).map((p) => (
           <li key={p.id} className="py-3">
             <Link className="text-blue-600 underline" href={`/posts/${p.id}`}>
@@ -41,7 +41,7 @@ export default function PostsPage() {
           </li>
         ))}
       </ul>
-      <div className="flex justify-end">
+      <div className="flex justify-end card">
         <Pagination
           current={page}
           pageSize={pageSize}
@@ -53,7 +53,7 @@ export default function PostsPage() {
           showSizeChanger
         />
       </div>
-    </main>
+    </div>
   )
 }
 

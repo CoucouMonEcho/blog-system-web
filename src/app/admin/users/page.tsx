@@ -32,14 +32,15 @@ export default function AdminUsersPage() {
 
   return (
     <section className="space-y-4">
-      <div className="flex justify-between">
+      <div className="card flex justify-between items-center">
         <h2 className="text-xl font-semibold">用户管理</h2>
         <Button type="primary" onClick={() => setCreateVisible(true)}>
           新增用户
         </Button>
       </div>
 
-      <Table
+      <div className="card">
+        <Table
         rowKey="id"
         loading={loading}
         dataSource={dataSource}
@@ -75,9 +76,10 @@ export default function AdminUsersPage() {
           }
         ]}
         pagination={false}
-      />
+        />
+      </div>
 
-      <div className="flex justify-end">
+      <div className="card flex justify-end">
         <Pagination
           current={page}
           pageSize={pageSize}
@@ -106,7 +108,7 @@ export default function AdminUsersPage() {
             fetchList()
           }}
         >
-          <Form.Item name="username" label="用户名" rules={[{ required: true }]}>
+          <Form.Item name="username" label="用户名" rules={[{ required: true }]}> 
             <Input />
           </Form.Item>
           <Form.Item name="email" label="邮箱" rules={[{ required: true }]}>
