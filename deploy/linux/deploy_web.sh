@@ -30,14 +30,16 @@ export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
 node -v || true
 npm -v || true
 
-echo "[INFO] Installing dependencies (including dev for build)..."
-npm ci
-
-echo "[INFO] Building Next.js app..."
-npm run build
-
-echo "[INFO] Pruning dev dependencies for runtime..."
-npm prune --omit=dev
+if [ -d .next ] && [ -d node_modules ]; then
+  echo "[INFO] Using prebuilt artifacts uploaded by CI"
+else
+  echo "[INFO] Installing dependencies (including dev for build)..."
+  npm ci
+  echo "[INFO] Building Next.js app..."
+  npm run build
+  echo "[INFO] Pruning dev dependencies for runtime..."
+  npm prune --omit=dev
+fi
 
 SERVICE_FILE="/etc/systemd/system/blog-system-web.service"
 TMP_SERVICE_FILE="/tmp/blog-system-web.service"

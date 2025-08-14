@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="682ca6d9-4d37-416e-804e-f5988ad6cc59" name="Changes" comment="dev user web">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-web.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy-web.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy/linux/deploy_web.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy/linux/deploy_web.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +18,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,7 +54,7 @@
     &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/echo&quot;,
@@ -89,7 +91,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="119" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="148" />
+                  <entry key="Table.GitHub.CommitStatus.ColumnIdWidth" value="110" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -97,7 +107,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="dev user web" />
-    <option name="LAST_COMMIT_MESSAGE" value="dev user web" />
+    <MESSAGE value="dev service web deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="dev service web deploy" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

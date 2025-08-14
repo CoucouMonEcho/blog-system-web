@@ -41,6 +41,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Use Node.js 20 (build artifacts on runner)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps (runner)
+        run: |
+          npm ci --no-audit --fund=false
+
+      - name: Build Next.js (runner)
+        run: |
+          npm run build
+
+      - name: Prune dev deps (runner)
+        run: |
+          npm prune --omit=dev
+
       - name: Prepare remote directory
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -61,7 +78,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
-            package.json,package-lock.json,tsconfig.json,tailwind.config.ts,postcss.config.js,README.md,next.config.mjs,next-env.d.ts,middleware.ts,src,deploy
+            package.json,package-lock.json,next.config.mjs,next-env.d.ts,middleware.ts,.next,node_modules,deploy
           target: /opt/blog-system-web
           overwrite: true
 
