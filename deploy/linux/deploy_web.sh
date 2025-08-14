@@ -8,7 +8,7 @@ set -euo pipefail
 # - GIT_SHA: build identifier
 
 APP_DIR="/opt/blog-system-web"
-APP_PORT="${APP_PORT:-3000}"
+APP_PORT="${APP_PORT:-80}"
 SERVICE_USER="${SERVICE_USER:-$USER}"
 export NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-}"
 export NODE_ENV=production

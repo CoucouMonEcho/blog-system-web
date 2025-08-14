@@ -43,7 +43,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 cd /opt/blog-system-web
 chmod +x deploy/linux/npm_env.sh deploy/linux/deploy_web.sh
 ./deploy/linux/npm_env.sh
-APP_PORT=3000 NEXT_PUBLIC_API_BASE_URL=https://api.example.com \
+APP_PORT=80 NEXT_PUBLIC_API_BASE_URL=https://api.example.com \
   ./deploy/linux/deploy_web.sh
 ```
 
@@ -65,7 +65,7 @@ APP_PORT=3000 NEXT_PUBLIC_API_BASE_URL=https://api.example.com \
 需要在仓库 `Secrets and variables -> Actions` 配置以下 Secrets（工作流会先做预检）：
 
 - `SSH_HOST`、`SSH_USERNAME`、`SSH_PRIVATE_KEY`（必需）
-- `NEXT_PUBLIC_API_BASE_URL`、`APP_PORT`(默认 3000)
+- `NEXT_PUBLIC_API_BASE_URL`、`APP_PORT`(默认 80)
 
 推送到 `main` 或在 Actions 手动触发后，将自动：
 
