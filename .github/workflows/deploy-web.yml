@@ -1,0 +1,106 @@
+name: Deploy blog-system-web
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+  deploy-web:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prepare remote directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -euo pipefail
+            exec 2>&1
+            sudo mkdir -p /opt/blog-system-web
+            sudo chown -R "$USER":"$USER" /opt/blog-system-web
+
+      - name: Upload project files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: |
+            package.json,package-lock.json,tsconfig.json,tailwind.config.ts,postcss.config.js,README.md,next.config.mjs,next-env.d.ts,middleware.ts,src,deploy
+          target: /opt/blog-system-web
+          overwrite: true
+
+      - name: Ensure Node env on remote
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          SKIP_NVM: "1"
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: SKIP_NVM
+          script: |
+            set -euo pipefail
+            exec 2>&1
+            cd /opt/blog-system-web
+            chmod +x deploy/linux/npm_env.sh
+            SKIP_NVM="${SKIP_NVM:-1}" ./deploy/linux/npm_env.sh
+
+      - name: Deploy and restart service
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          APP_PORT: ${{ secrets.APP_PORT }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: NEXT_PUBLIC_API_BASE_URL,APP_PORT,GITHUB_SHA
+          script: |
+            set -euo pipefail
+            exec 2>&1
+            cd /opt/blog-system-web
+            chmod +x deploy/linux/deploy_web.sh
+            NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-}" APP_PORT="${APP_PORT:-3000}" GIT_SHA="${GITHUB_SHA:-manual}" ./deploy/linux/deploy_web.sh
+
+      - name: Verify service health (intra-host)
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          APP_PORT: ${{ secrets.APP_PORT }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: APP_PORT
+          script: |
+            set -euo pipefail
+            exec 2>&1
+            sleep 5
+            curl -fsS "http://127.0.0.1:${APP_PORT}/api/health" | sed -n '1,200p'
+
+      # No domain verification step for direct mode
+
+

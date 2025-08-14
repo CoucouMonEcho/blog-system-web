@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="682ca6d9-4d37-416e-804e-f5988ad6cc59" name="Changes" comment="dev user web">
+      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/deploy-web.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deploy/linux/deploy_web.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deploy/linux/npm_env.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/next-env.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(public)/posts/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(public)/posts/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/comments/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/posts/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/posts/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/stat/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/health/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/auth/login/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/http.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/providers/Providers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/auth.store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "CoucouMonEcho"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/CoucouMonEcho/blog-system-web",
+    "accountId": "c0265914-a9d0-4427-82a4-e3f31c388ea4"
+  }
+}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="31ET2dopPAAT72w4MosJnC2iYUI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "dev",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/echo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "ts.external.directory.path": "/Users/echo/Workspace/projects/blog-system-web/node_modules/typescript/lib"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-3b128438d3f6-34ac7aa8f6ab-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-251.23774.430" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-GO-251.23774.430" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="682ca6d9-4d37-416e-804e-f5988ad6cc59" name="Changes" comment="" />
+      <created>1755088025588</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1755088025588</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dev user web" />
+    <option name="LAST_COMMIT_MESSAGE" value="dev user web" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
