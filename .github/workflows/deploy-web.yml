@@ -12,6 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Preflight secrets
+        run: |
+          set -euo pipefail
+          : "${SSH_HOST:?Missing secret SSH_HOST}"
+          : "${SSH_USERNAME:?Missing secret SSH_USERNAME}"
+          : "${SSH_PRIVATE_KEY:?Missing secret SSH_PRIVATE_KEY}"
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
@@ -40,7 +51,8 @@ jobs:
             set -euo pipefail
             exec 2>&1
             sudo mkdir -p /opt/blog-system-web
-            sudo chown -R "$USER":"$USER" /opt/blog-system-web
+            # chown to the SSH user to ensure write permission during scp
+            sudo chown -R "${USER:-$LOGNAME}":"${USER:-$LOGNAME}" /opt/blog-system-web
 
       - name: Upload project files
         uses: appleboy/scp-action@v0.1.7
@@ -53,21 +65,6 @@ jobs:
           target: /opt/blog-system-web
           overwrite: true
 
-      - name: Ensure Node env on remote
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          SKIP_NVM: "1"
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: SKIP_NVM
-          script: |
-            set -euo pipefail
-            exec 2>&1
-            cd /opt/blog-system-web
-            chmod +x deploy/linux/npm_env.sh
-            SKIP_NVM="${SKIP_NVM:-1}" ./deploy/linux/npm_env.sh
 
       - name: Deploy and restart service
         uses: appleboy/ssh-action@v1.0.3

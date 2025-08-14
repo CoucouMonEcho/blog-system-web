@@ -62,16 +62,17 @@ APP_PORT=3000 NEXT_PUBLIC_API_BASE_URL=https://api.example.com \
 
 工作流：`.github/workflows/deploy-web.yml`
 
-需要在仓库 `Secrets and variables -> Actions` 配置以下 Secrets：
+需要在仓库 `Secrets and variables -> Actions` 配置以下 Secrets（工作流会先做预检）：
 
-- `SSH_HOST`、`SSH_USERNAME`、`SSH_PRIVATE_KEY`
+- `SSH_HOST`、`SSH_USERNAME`、`SSH_PRIVATE_KEY`（必需）
 - `NEXT_PUBLIC_API_BASE_URL`、`APP_PORT`(默认 3000)
 
 推送到 `main` 或在 Actions 手动触发后，将自动：
 
 - SSH 创建 `/opt/blog-system-web`
 - SCP 同步项目文件
-- 远程执行 `npm_env.sh` + `deploy_web.sh`（直连，监听 `${APP_PORT}`）
+- 服务器需预装 Node（可手动执行 `deploy/linux/npm_env.sh`）
+- 远程执行 `deploy_web.sh`（直连，监听 `${APP_PORT}`）
 - 调用 `/api/health` 验证健康状态
 
 ## 目录结构（关键）
