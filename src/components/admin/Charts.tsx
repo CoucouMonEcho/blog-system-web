@@ -24,14 +24,15 @@ export function MiniLine({ data, color = '#3b82f6', width = 160, height = 40 }: 
   )
 }
 
+const MULTI_SERIES_KEYS = ['p50', 'p90', 'p95', 'p99'] as const
+const MULTI_COLORS: Record<(typeof MULTI_SERIES_KEYS)[number], string> = {
+  p50: '#10b981',
+  p90: '#3b82f6',
+  p95: '#f59e0b',
+  p99: '#ef4444'
+}
+
 export function MultiLine({ data, width = 240, height = 60 }: { data: LatencyPercentilePoint[]; width?: number; height?: number }) {
-  const seriesKeys = ['p50', 'p90', 'p95', 'p99'] as const
-  const colors: Record<(typeof seriesKeys)[number], string> = {
-    p50: '#10b981',
-    p90: '#3b82f6',
-    p95: '#f59e0b',
-    p99: '#ef4444'
-  }
   const paths = useMemo(() => {
     if (!data || data.length === 0) return {}
     const xStep = width / Math.max(1, data.length - 1)
@@ -43,7 +44,7 @@ export function MultiLine({ data, width = 240, height = 60 }: { data: LatencyPer
       return height - ((v - min) / (max - min)) * height
     }
     const out: Record<string, string> = {}
-    for (const k of seriesKeys) {
+    for (const k of MULTI_SERIES_KEYS) {
       const pts = data
         .map((d, i) => (typeof d[k] === 'number' ? `${i * xStep},${scaleY(d[k] as number)}` : null))
         .filter(Boolean)
@@ -55,8 +56,8 @@ export function MultiLine({ data, width = 240, height = 60 }: { data: LatencyPer
 
   return (
     <svg width="100%" height={height + 4} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
-      {(['p50', 'p90', 'p95', 'p99'] as const).map((k) => (
-        <polyline key={k} fill="none" stroke={colors[k]} strokeWidth="2" points={paths?.[k] || ''} />
+      {(MULTI_SERIES_KEYS as readonly string[]).map((k) => (
+        <polyline key={k} fill="none" stroke={MULTI_COLORS[k as keyof typeof MULTI_COLORS]} strokeWidth="2" points={paths?.[k] || ''} />
       ))}
     </svg>
   )

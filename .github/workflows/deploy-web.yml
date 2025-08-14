@@ -117,13 +117,18 @@ jobs:
             # Default port when not provided
             APP_PORT="${APP_PORT:-80}"
             sleep 15
+            HEALTH_OK=0
             for p in "$APP_PORT" "80"; do
               echo "[INFO] Probing http://127.0.0.1:${p}/api/health"
               if curl -fsS "http://127.0.0.1:${p}/api/health" | sed -n '1,200p'; then
                 echo "[OK] Health check passed on port ${p}"
-                exit 0
+                HEALTH_OK=1
+                break
               fi
             done
+            if [ "$HEALTH_OK" -eq 1 ]; then
+              exit 0
+            fi
             echo "[ERROR] Health check failed on all tried ports. Printing service status..."
             systemctl is-active --quiet blog-system-web || true
             systemctl status blog-system-web --no-pager -l || true
