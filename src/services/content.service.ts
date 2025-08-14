@@ -14,23 +14,23 @@ export type ArticleList = {
 }
 
 export async function getArticle(articleId: number) {
-  const res = await http.get<ApiResponse<Article>>(`/api/article/${articleId}`)
+  const res = await http.get<ApiResponse<Article>>(`/api/content/article/${articleId}`)
   return res.data.data
 }
 
 export async function getArticleList(params: { page: number; page_size: number }) {
-  const res = await http.get<ApiResponse<ArticleList>>('/api/article/list', { params })
+  const res = await http.get<ApiResponse<ArticleList>>('/api/content/article/list', { params })
   return res.data.data
 }
 
 export async function searchArticles(params: { q: string; page: number; page_size: number }) {
-  const res = await http.get<ApiResponse<ArticleList>>('/api/article/search', { params })
+  const res = await http.get<ApiResponse<ArticleList>>('/api/content/article/search', { params })
   return res.data.data
 }
 
 export type CategoryNode = { id: number; name: string; children: CategoryNode[] }
 export async function getCategoryTree() {
-  const res = await http.get<ApiResponse<CategoryNode[]>>('/api/category/tree')
+  const res = await http.get<ApiResponse<CategoryNode[]>>('/api/content/category/tree')
   return res.data.data
 }
 

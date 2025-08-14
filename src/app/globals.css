@@ -38,6 +38,18 @@ body {
   .nav-link {
     @apply text-slate-700 hover:text-slate-900 hover:underline;
   }
+  .sidebar {
+    @apply p-4 space-y-4;
+  }
+  .sidebar-title {
+    @apply font-semibold text-lg text-slate-800;
+  }
+  .sidebar-link {
+    @apply px-3 py-2 rounded-md text-sm text-slate-700 hover:text-slate-900 hover:bg-white border border-transparent hover:border-gray-200 transition;
+  }
+  .sidebar-link-active {
+    @apply bg-white border-gray-200 text-slate-900 shadow-sm;
+  }
 }
 
 /* Minimal prose styling without extra plugin */
