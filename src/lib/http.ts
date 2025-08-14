@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { API_BASE_URL } from '@/config/app'
 
 /**
  * Axios 实例，统一：
@@ -9,7 +10,7 @@ import Cookies from 'js-cookie'
  * - 统一错误处理（可在业务层进一步细化）
  */
 export const http = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
+  baseURL: API_BASE_URL,
   timeout: 15000,
   withCredentials: false,
   headers: {
