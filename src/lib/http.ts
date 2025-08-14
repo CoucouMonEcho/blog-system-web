@@ -11,14 +11,20 @@ import Cookies from 'js-cookie'
 export const http = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
   timeout: 15000,
-  withCredentials: false
+  withCredentials: false,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 http.interceptors.request.use((config) => {
-  const token = Cookies.get('access_token')
-  if (token) {
-    config.headers = config.headers || {}
-    config.headers.Authorization = `Bearer ${token}`
+  // Attach token only in browser
+  if (typeof window !== 'undefined') {
+    const token = Cookies.get('access_token')
+    if (token) {
+      config.headers = config.headers || {}
+      config.headers.Authorization = `Bearer ${token}`
+    }
   }
   return config
 })

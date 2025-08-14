@@ -4,10 +4,20 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="682ca6d9-4d37-416e-804e-f5988ad6cc59" name="Changes" comment="dev user web">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-web.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy-web.yml" afterDir="false" />
+    <list default="true" id="682ca6d9-4d37-416e-804e-f5988ad6cc59" name="Changes" comment="dev service web deploy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/linux/deploy_web.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy/linux/deploy_web.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(public)/posts/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/posts/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(public)/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/posts/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/comments/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/posts/[id]/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/posts/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/stat/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/http.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

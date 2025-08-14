@@ -1,25 +1,58 @@
+"use client"
+
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
+import { getArticleList, searchArticles } from '@/services/content.service'
+import { Input, Pagination } from 'antd'
+import { useState } from 'react'
 
 export default function PostsPage() {
-  // 演示列表页：后续将接入内容服务
-  const demo = [
-    { id: '1', title: 'Hello DDD', summary: '为什么选择领域驱动设计' },
-    { id: '2', title: 'Go + Next 实战', summary: '前后端协作与网关对接' }
-  ]
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [q, setQ] = useState('')
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['articles', q, page, pageSize],
+    queryFn: async () => {
+      if (q.trim()) return searchArticles({ q, page, page_size: pageSize })
+      return getArticleList({ page, page_size: pageSize })
+    }
+  })
 
   return (
     <main className="max-w-5xl mx-auto p-6 space-y-4">
       <h2 className="text-2xl font-semibold">文章列表</h2>
+      <div className="flex gap-2">
+        <Input.Search
+          placeholder="搜索关键字"
+          allowClear
+          onSearch={() => refetch()}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          loading={isLoading}
+        />
+      </div>
       <ul className="divide-y">
-        {demo.map((p) => (
+        {(data?.list || []).map((p) => (
           <li key={p.id} className="py-3">
             <Link className="text-blue-600 underline" href={`/posts/${p.id}`}>
               {p.title}
             </Link>
-            <p className="text-gray-600 text-sm">{p.summary}</p>
           </li>
         ))}
       </ul>
+      <div className="flex justify-end">
+        <Pagination
+          current={page}
+          pageSize={pageSize}
+          total={data?.total || 0}
+          onChange={(cp, ps) => {
+            setPage(cp)
+            setPageSize(ps)
+          }}
+          showSizeChanger
+        />
+      </div>
     </main>
   )
 }
