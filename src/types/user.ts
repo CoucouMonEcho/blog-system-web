@@ -4,6 +4,7 @@ export type User = {
   email?: string
   nickname?: string
   avatarUrl?: string
+  created_at?: string
 }
 
 export type LoginRequest = {

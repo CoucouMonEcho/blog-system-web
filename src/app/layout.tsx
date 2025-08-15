@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import Providers from '@/providers/Providers'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Blog System',
@@ -15,26 +16,39 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className="min-h-screen bg-white text-slate-900">
+      <body className="min-h-screen bg-slate-50 text-slate-800">
         <AntdRegistry>
           <Providers>
-            <header className="border-b border-gray-200 sticky top-0 bg-white/90 backdrop-blur z-10">
-              <div className="container-app flex items-center justify-between py-3">
-                <div className="font-semibold text-lg">Blog System</div>
-                <nav className="flex gap-4 text-sm">
-                  <a className="nav-link" href="/">首页</a>
-                  <a className="nav-link" href="/posts">文章</a>
-                  <a className="nav-link" href="/auth/login">登录</a>
-                  <a className="nav-link" href="/admin">后台</a>
-                </nav>
-              </div>
-            </header>
-            <main className="container-app">{children}</main>
-            <footer className="border-t border-gray-200">
-              <div className="container-app text-center text-sm text-slate-500">
-                © {new Date().getFullYear()} Blog System
-              </div>
-            </footer>
+            <div className="flex flex-col min-h-screen">
+              <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+                <div className="container-app flex items-center justify-between py-4">
+                  <Link href="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors duration-200">
+                    Blog System
+                  </Link>
+                  <nav className="flex gap-2">
+                    <Link className="nav-link" href="/">首页</Link>
+                    <Link className="nav-link" href="/posts">文章</Link>
+                    <Link className="nav-link" href="/auth/login">登录</Link>
+                    <Link className="nav-link" href="/admin">后台</Link>
+                  </nav>
+                </div>
+              </header>
+              
+              <main className="flex-grow py-8">
+                {children}
+              </main>
+              
+              <footer className="bg-white border-t border-slate-200 py-8">
+                <div className="container-app text-center">
+                  <div className="text-slate-500 text-sm">
+                    © {new Date().getFullYear()} Blog System. All rights reserved.
+                  </div>
+                  <div className="mt-2 text-xs text-slate-400">
+                    Built with Next.js & Tailwind CSS
+                  </div>
+                </div>
+              </footer>
+            </div>
           </Providers>
         </AntdRegistry>
       </body>

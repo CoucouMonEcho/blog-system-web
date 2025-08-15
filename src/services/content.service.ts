@@ -4,10 +4,15 @@ export type Article = {
   id: number
   title: string
   content?: string
+  summary?: string
+  author?: string
+  created_at?: string
+  category?: string
+  view_count?: number
 }
 
 export type ArticleList = {
-  list: Array<Pick<Article, 'id' | 'title'>>
+  list: Array<Article>
   total: number
   page: number
   page_size: number
