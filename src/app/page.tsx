@@ -36,7 +36,7 @@ export default function HomePage() {
     <div className="container-app">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column */}
-        <div className="space-y-6">
+        <div className="space-y-6 lg:max-w-xs">
           {/* Profile Card */}
           <div className="card">
             <div className="flex flex-col items-center text-center">

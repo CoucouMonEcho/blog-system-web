@@ -19,7 +19,8 @@ function LoginContent() {
     setLoading(true)
     try {
       const result = await login(values)
-      setAuth(result.token, String(result.user.id))
+      // 登录接口返回 token + user
+      setAuth(result.token, result.user)
       message.success('登录成功')
       router.replace(next)
     } catch (error) {
