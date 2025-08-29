@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import Providers from '@/providers/Providers'
-import Link from 'next/link'
+import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
   title: 'Blog System',
@@ -20,19 +20,7 @@ export default function RootLayout({
         <AntdRegistry>
           <Providers>
             <div className="flex flex-col min-h-screen">
-              <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 shadow-sm">
-                <div className="container-app flex items-center justify-between py-4">
-                  <Link href="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors duration-200">
-                    Blog System
-                  </Link>
-                  <nav className="flex gap-2">
-                    <Link className="nav-link" href="/">首页</Link>
-                    <Link className="nav-link" href="/posts">文章</Link>
-                    <Link className="nav-link" href="/auth/login">登录</Link>
-                    <Link className="nav-link" href="/admin">后台</Link>
-                  </nav>
-                </div>
-              </header>
+              <Navbar />
               
               <main className="flex-grow py-8">
                 {children}

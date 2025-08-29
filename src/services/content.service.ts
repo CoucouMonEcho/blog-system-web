@@ -9,6 +9,8 @@ export type Article = {
   created_at?: string
   category?: string
   view_count?: number
+  tags?: string[]
+  cover_url?: string
 }
 
 export type ArticleList = {

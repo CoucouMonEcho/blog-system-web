@@ -1,103 +1,135 @@
+"use client"
+
 import Link from 'next/link'
+import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
+import { getArticleList } from '@/services/content.service'
+import { FileTextOutlined } from '@ant-design/icons'
+import { formatTimeAgo } from '@/lib/time'
+
+const STATIC_CATEGORIES: Array<{ name: string; count: number }> = [
+  { name: 'LeetCode', count: 59 },
+  { name: '分享', count: 5 },
+  { name: '生活', count: 17 },
+  { name: '编程', count: 34 },
+  { name: '阅读', count: 4 }
+]
+
+const STATIC_TAGS: Array<{ name: string; count: number }> = [
+  { name: '12306', count: 1 },
+  { name: 'AI', count: 1 },
+  { name: 'API', count: 1 },
+  { name: 'Go', count: 67 },
+  { name: 'Golang', count: 2 },
+  { name: 'LeetCode', count: 60 },
+  { name: 'PHP', count: 12 },
+  { name: 'RSS', count: 1 }
+]
 
 export default function HomePage() {
+  const { data } = useQuery({
+    queryKey: ['home-articles'],
+    queryFn: () => getArticleList({ page: 1, page_size: 10 })
+  })
+
   return (
-    <div className="container-app space-y-8">
-      {/* Hero Section */}
-      <section className="text-center py-12">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h1 className="text-5xl font-bold text-slate-800 leading-tight">
-            欢迎来到 <span className="text-blue-600">Blog System</span>
-          </h1>
-          <p className="text-xl text-slate-600 leading-relaxed">
-            不死川梨华的小站
-          </p>
-          <div className="flex justify-center gap-4 pt-4">
-            <Link href="/posts" className="btn-primary">
-              浏览文章
-            </Link>
-            <Link href="/auth/login" className="btn-secondary">
-              立即登录
-            </Link>
+    <div className="container-app">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left column */}
+        <div className="space-y-6">
+          {/* Profile Card */}
+          <div className="card">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-28 h-28 rounded-full overflow-hidden bg-slate-100">
+                <Image src={'https://avatars.githubusercontent.com/u/82883693'} width={112} height={112} alt="avatar" />
+              </div>
+              <h2 className="text-3xl font-semibold mt-4">不死川梨华</h2>
+              <p className="text-slate-600 mt-1">coucoumonecho</p>
+              <div className="flex justify-center gap-8 mt-6">
+                <div className="text-center">
+                  <div className="muted">文章</div>
+                  <div className="text-3xl font-semibold">11</div>
+                </div>
+                <div className="text-center">
+                  <div className="muted">分类</div>
+                  <div className="text-3xl font-semibold">5</div>
+                </div>
+                <div className="text-center">
+                  <div className="muted">标签</div>
+                  <div className="text-3xl font-semibold">74</div>
+                </div>
+              </div>
+              <Link
+                href="https://github.com/CoucouMonEcho"
+                className="btn-primary mt-6 px-8"
+                target="_blank"
+              >
+                关注我
+              </Link>
+            </div>
+          </div>
+
+          {/* Categories Card */}
+          <div className="card">
+            <div className="font-semibold text-lg mb-4">分类</div>
+            <div className="space-y-3">
+              {STATIC_CATEGORIES.map((c) => (
+                <div key={c.name} className="flex items-center justify-between">
+                  <span className="text-slate-700">{c.name}</span>
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-700">{c.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tags Card */}
+          <div className="card">
+            <div className="font-semibold text-lg mb-4">标签</div>
+            <div className="flex flex-wrap gap-2">
+              {STATIC_TAGS.map((t) => (
+                <span key={t.name} className="inline-flex items-center gap-1 bg-blue-500 text-white px-2.5 py-1 rounded-full text-xs">
+                  {t.name}
+                  <span className="bg-white/90 text-slate-700 rounded-md px-1">{t.count}</span>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Features Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="card-hover text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-            </svg>
+        {/* Right column: article list */}
+        <div className="lg:col-span-2 space-y-4">
+          {(data?.list || []).map((article) => (
+            <article key={article.id} className="card-hover group">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-24 h-24 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-200">
+                    <FileTextOutlined className="text-3xl text-blue-600" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <Link href={`/posts/${article.id}`} className="block group-hover:text-blue-600 transition-colors duration-200">
+                    <h3 className="text-xl font-semibold text-slate-800 mb-2 line-clamp-2 group-hover:text-blue-600">
+                      {article.title}
+                    </h3>
+                  </Link>
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-2">
+                    {article.category && <span className="badge">{article.category}</span>}
+                    <span>{formatTimeAgo(article.created_at)}</span>
+                  </div>
+                  {article.summary ? (
+                    <p className="text-slate-600 line-clamp-2">{article.summary}</p>
+                  ) : (
+                    <p className="text-slate-600 line-clamp-2">{article.content?.slice(0, 120) || ''}</p>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+          <div className="text-right text-slate-600">
+            <Link href="/posts" className="nav-link">查看更多</Link>
           </div>
-          <h3 className="text-xl font-semibold text-slate-800 mb-2">文章管理</h3>
-          <p className="text-slate-600">创建、编辑和管理文章</p>
         </div>
-
-        <div className="card-hover text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-slate-800 mb-2">用户系统</h3>
-          <p className="text-slate-600">完整的用户认证和权限管理系统</p>
-        </div>
-
-        <div className="card-hover text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-slate-800 mb-2">数据分析</h3>
-          <p className="text-slate-600">详细的访问统计和性能监控</p>
-        </div>
-      </section>
-
-      {/* Quick Navigation */}
-      <section className="card">
-        <h2 className="section-title">快速导航</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link href="/posts" className="flex flex-col items-center p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 group">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors duration-200">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-              </svg>
-            </div>
-            <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">文章列表</span>
-          </Link>
-
-          <Link href="/auth/login" className="flex flex-col items-center p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 group">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors duration-200">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-            </div>
-            <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">用户登录</span>
-          </Link>
-
-          <Link href="/admin" className="flex flex-col items-center p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 group">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors duration-200">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">管理后台</span>
-          </Link>
-
-          <Link href="/profile" className="flex flex-col items-center p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 group">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors duration-200">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">个人中心</span>
-          </Link>
-        </div>
-      </section>
+      </div>
     </div>
   )
 }

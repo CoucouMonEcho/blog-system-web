@@ -5,6 +5,7 @@ export type User = {
   nickname?: string
   avatarUrl?: string
   created_at?: string
+  role?: 'user' | 'admin'
 }
 
 export type LoginRequest = {
