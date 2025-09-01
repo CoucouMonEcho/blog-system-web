@@ -14,7 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+    <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 shadow-sm" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
       <div className="container-app flex items-center justify-between py-2">
         <div className="flex items-center gap-6">
           <Link href="/" className="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors duration-200">

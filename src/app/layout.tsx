@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import Providers from '@/providers/Providers'
 import Navbar from '@/components/Navbar'
@@ -7,6 +7,12 @@ import Navbar from '@/components/Navbar'
 export const metadata: Metadata = {
   title: '不死川梨华的小站',
   description: '分享一些有趣的东西'
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover'
 }
 
 export default function RootLayout({
@@ -19,7 +25,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-slate-50 text-slate-800">
         <AntdRegistry>
           <Providers>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-[100svh]">
               <Navbar />
               
               <main className="flex-grow py-8">

@@ -32,7 +32,7 @@ function LoginContent() {
 
   return (
     <div className="container-app">
-      <div className="flex justify-center items-center min-h-[70vh]">
+      <div className="flex justify-center items-center min-h-[70svh]">
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="text-center mb-8">
