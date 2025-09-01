@@ -10,7 +10,7 @@
 - 样式: TailwindCSS（实用类 + 约定化组件类）
 
 ## 关键特性
-- 鉴权与路由保护: 通过 `middleware.ts` 校验 `access_token` Cookie，未登录访问 `/admin/*` 与 `/profile` 将被重定向至登录页。
+- 鉴权与路由保护: 通过 `middleware.ts` 校验 `access_token` Cookie，未登录访问 `/admin/*` 将被重定向至登录页。
 - 管理后台: 统一布局与高亮侧边导航，仪表盘展示基础 KPI、PV 趋势、错误率、活跃用户、延迟分位数与 Top Endpoints。
 - 最小依赖图表: 使用原生 SVG 渲染轻量折线图，必要时可平滑替换为 `@ant-design/plots`/ECharts。
 - 服务抽象: `services/*` 统一封装 API；`lib/http.ts` 管理 Axios 实例与 token 注入。
@@ -41,7 +41,7 @@ graph TD
 ```text
 src/
   app/
-    (public)/posts/        # 前台文章
+    (public)/posts/        # 已删除：文章列表整合进首页
     admin/                 # 后台：仪表盘/用户/文章/分类
       layout.tsx
       page.tsx
@@ -91,9 +91,8 @@ npm run build
 npm start
 ```
 
-## 鉴权与访问控制
 - 登录: 成功登录后，`useAuthStore.setAuth()` 将写入 `access_token` Cookie 与 store。
-- 路由保护: `middleware.ts` 保护 `/admin/:path*` 与 `/profile`，未登录跳转到 `/auth/login?next=...`。
+- 路由保护: `middleware.ts` 仅保护 `/admin/:path*`，未登录跳转到 `/auth/login?next=...`。
 - 请求注入: `lib/http.ts` 在浏览器向请求头附加 `Authorization: Bearer <token>`。
 
 ```mermaid

@@ -2,11 +2,16 @@
 
 import Link from 'next/link'
 import { SearchOutlined } from '@ant-design/icons'
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
+
+const SearchModal = dynamic(() => import('./SearchModal'), { ssr: false })
 import { useAuthStore } from '@/stores/auth.store'
 
 export default function Navbar() {
   const user = useAuthStore((s) => s.user)
   const isAdmin = user?.role === 'admin'
+  const [open, setOpen] = useState(false)
 
   return (
     <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 shadow-sm">
@@ -26,9 +31,10 @@ export default function Navbar() {
           {isAdmin && (
             <Link className="nav-link" href="/admin">后台</Link>
           )}
-          <Link href="/posts" className="nav-link flex items-center gap-1">
+          <button className="nav-link flex items-center gap-1" onClick={() => setOpen(true)}>
             <SearchOutlined />
-          </Link>
+          </button>
+          <SearchModal open={open} onClose={() => setOpen(false)} />
         </div>
       </div>
     </header>

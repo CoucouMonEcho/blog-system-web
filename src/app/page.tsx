@@ -2,34 +2,34 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getArticleList } from '@/services/content.service'
+import { getArticleList, getCategories, getTags } from '@/services/content.service'
 import { FileTextOutlined } from '@ant-design/icons'
+import { Pagination } from 'antd'
 import { formatTimeAgo } from '@/lib/time'
 
-const STATIC_CATEGORIES: Array<{ name: string; count: number }> = [
-  { name: 'LeetCode', count: 59 },
-  { name: '分享', count: 5 },
-  { name: '生活', count: 17 },
-  { name: '编程', count: 34 },
-  { name: '阅读', count: 4 }
-]
-
-const STATIC_TAGS: Array<{ name: string; count: number }> = [
-  { name: '12306', count: 1 },
-  { name: 'AI', count: 1 },
-  { name: 'API', count: 1 },
-  { name: 'Go', count: 67 },
-  { name: 'Golang', count: 2 },
-  { name: 'LeetCode', count: 60 },
-  { name: 'PHP', count: 12 },
-  { name: 'RSS', count: 1 }
-]
+// 分类与标签在客户端实时获取，展示准确计数
 
 export default function HomePage() {
-  const { data } = useQuery({
-    queryKey: ['home-articles'],
-    queryFn: () => getArticleList({ page: 1, page_size: 10 })
+  const [page, setPage] = React.useState(1)
+  const [pageSize, setPageSize] = React.useState(10)
+  const [categoryId, setCategoryId] = React.useState<number | undefined>(undefined)
+  const [tagIds, setTagIds] = React.useState<number[]>([])
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['home-articles', page, pageSize, categoryId, tagIds],
+    queryFn: () => getArticleList({ page, page_size: pageSize, category_id: categoryId, tag_ids: tagIds })
+  })
+
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories
+  })
+
+  const { data: tags } = useQuery({
+    queryKey: ['tags'],
+    queryFn: getTags
   })
 
   return (
@@ -72,13 +72,20 @@ export default function HomePage() {
           {/* Categories Card */}
           <div className="card">
             <div className="font-semibold text-lg mb-4">分类</div>
-            <div className="space-y-3">
-              {STATIC_CATEGORIES.map((c) => (
-                <div key={c.name} className="flex items-center justify-between">
-                  <span className="text-slate-700">{c.name}</span>
-                  <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-700">{c.count}</span>
-                </div>
-              ))}
+            <div className="space-y-2">
+              {(categories || []).map((c) => {
+                const active = categoryId === c.id
+                return (
+                  <button
+                    key={c.id}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg border ${active ? 'border-blue-400 bg-blue-50 text-blue-700' : 'border-slate-200 hover:bg-slate-50'}`}
+                    onClick={() => { setPage(1); setCategoryId(active ? undefined : c.id) }}
+                  >
+                    <span>{c.name}</span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${active ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-700'}`}>{c.count ?? '-'}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
@@ -86,12 +93,19 @@ export default function HomePage() {
           <div className="card">
             <div className="font-semibold text-lg mb-4">标签</div>
             <div className="flex flex-wrap gap-2">
-              {STATIC_TAGS.map((t) => (
-                <span key={t.name} className="inline-flex items-center gap-1 bg-blue-500 text-white px-2.5 py-1 rounded-full text-xs">
-                  {t.name}
-                  <span className="bg-white/90 text-slate-700 rounded-md px-1">{t.count}</span>
-                </span>
-              ))}
+              {(tags || []).map((t) => {
+                const active = tagIds.includes(t.id)
+                return (
+                  <button
+                    key={t.id}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs border ${active ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`}
+                    onClick={() => { setPage(1); setTagIds((ids) => active ? ids.filter((id) => id !== t.id) : [...ids, t.id]) }}
+                  >
+                    {t.name}
+                    <span className={`rounded-md px-1 ${active ? 'bg-white/90 text-slate-700' : 'bg-slate-100 text-slate-700'}`}>{t.count ?? '-'}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -125,8 +139,19 @@ export default function HomePage() {
               </div>
             </article>
           ))}
-          <div className="text-right text-slate-600">
-            <Link href="/posts" className="nav-link">查看更多</Link>
+          <div className="card">
+            <div className="flex justify-center">
+              <Pagination
+                current={page}
+                pageSize={pageSize}
+                total={data?.total || 0}
+                showSizeChanger
+                showQuickJumper
+                onChange={(cp, ps) => { setPage(cp); setPageSize(ps) }}
+                showTotal={(total, range) => `第 ${range[0]}-${range[1]} 条，共 ${total} 条`}
+                pageSizeOptions={['10','20','50']}
+              />
+            </div>
           </div>
         </div>
       </div>

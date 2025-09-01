@@ -5,8 +5,8 @@ import Providers from '@/providers/Providers'
 import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
-  title: 'Blog System',
-  description: 'Personal blog system frontend (public + admin)'
+  title: '不死川梨华的小站',
+  description: '分享一些有趣的东西'
 }
 
 export default function RootLayout({
@@ -28,9 +28,7 @@ export default function RootLayout({
               
               <footer className="bg-white border-t border-slate-200 py-8">
                 <div className="container-app text-center">
-                  <div className="text-slate-500 text-sm">
-                    © {new Date().getFullYear()} Blog System. All rights reserved.
-                  </div>
+                  <div className="text-slate-500 text-sm">© {new Date().getFullYear()} 不死川梨华的小站</div>
                   <div className="mt-2 text-xs text-slate-400">
                     Built with Next.js & Tailwind CSS
                   </div>

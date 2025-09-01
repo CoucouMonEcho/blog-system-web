@@ -25,7 +25,8 @@ export async function getArticle(articleId: number) {
   return res.data.data
 }
 
-export async function getArticleList(params: { page: number; page_size: number }) {
+// 统一文章列表接口：分页必填；分类/标签筛选为可选
+export async function getArticleList(params: { page: number; page_size: number; category_id?: number; tag_ids?: number[] }) {
   const res = await http.get<ApiResponse<ArticleList>>('/api/content/article/list', { params })
   return res.data.data
 }
@@ -35,9 +36,15 @@ export async function searchArticles(params: { q: string; page: number; page_siz
   return res.data.data
 }
 
-export type CategoryNode = { id: number; name: string; children: CategoryNode[] }
-export async function getCategoryTree() {
-  const res = await http.get<ApiResponse<CategoryNode[]>>('/api/content/category/tree')
+export type Category = { id: number; name: string; count?: number }
+export async function getCategories() {
+  const res = await http.get<ApiResponse<Category[]>>('/api/content/category/list')
+  return res.data.data
+}
+
+export type Tag = { id: number; name: string; count?: number }
+export async function getTags() {
+  const res = await http.get<ApiResponse<Tag[]>>('/api/content/tag/list')
   return res.data.data
 }
 
