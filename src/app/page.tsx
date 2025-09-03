@@ -8,6 +8,7 @@ import { getArticleList, getCategories, getTags } from '@/services/content.servi
 import { FileTextOutlined } from '@ant-design/icons'
 import { Pagination } from 'antd'
 import { formatTimeAgo } from '@/lib/time'
+import { safeString } from '@/lib/sanitize'
 
 // 分类与标签在客户端实时获取，展示准确计数
 
@@ -130,11 +131,12 @@ export default function HomePage() {
                     {article.category && <span className="badge">{article.category}</span>}
                     <span>{formatTimeAgo(article.created_at)}</span>
                   </div>
-                  {article.summary ? (
-                    <p className="text-slate-600 line-clamp-2">{article.summary}</p>
-                  ) : (
-                    <p className="text-slate-600 line-clamp-2">{article.content?.slice(0, 120) || ''}</p>
-                  )}
+                  {(() => {
+                    const summary = safeString(article.summary) ?? safeString(article.content)?.slice(0, 120) ?? ''
+                    return (
+                      <p className="text-slate-600 line-clamp-2">{summary}</p>
+                    )
+                  })()}
                 </div>
               </div>
             </article>

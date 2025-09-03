@@ -1,6 +1,7 @@
 import { getArticle } from '@/services/content.service'
 import { notFound } from 'next/navigation'
 import { CalendarOutlined, UserOutlined, FolderOutlined, EyeOutlined, FileTextOutlined } from '@ant-design/icons'
+import { safeString } from '@/lib/sanitize'
 
 interface ArticlePageProps {
   params: {
@@ -28,14 +29,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div className="flex flex-wrap justify-center items-center gap-6 text-slate-600 mb-6">
               <div className="flex items-center gap-2">
                 <UserOutlined className="text-blue-500" />
-                <span className="font-medium">{article.author || '未知作者'}</span>
+                <span className="font-medium">{safeString(article.author) || '未知作者'}</span>
               </div>
               
               <div className="flex items-center gap-2">
                 <CalendarOutlined className="text-blue-500" />
                 <span>
-                  {article.created_at 
-                    ? new Date(article.created_at).toLocaleDateString('zh-CN', {
+                  {safeString(article.created_at) 
+                    ? new Date(safeString(article.created_at) as string).toLocaleDateString('zh-CN', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
@@ -45,14 +46,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </span>
               </div>
               
-              {article.category && (
+              {safeString(article.category) && (
                 <div className="flex items-center gap-2">
                   <FolderOutlined className="text-blue-500" />
-                  <span className="badge">{article.category}</span>
+                  <span className="badge">{safeString(article.category)}</span>
                 </div>
               )}
               
-              {article.view_count && (
+              {typeof article.view_count !== 'undefined' && article.view_count !== null && (
                 <div className="flex items-center gap-2">
                   <EyeOutlined className="text-blue-500" />
                   <span>{article.view_count} 次阅读</span>
@@ -60,10 +61,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               )}
             </div>
             
-            {article.summary && (
+            {safeString(article.summary) && (
               <div className="max-w-2xl mx-auto">
                 <p className="text-lg text-slate-600 leading-relaxed italic border-l-4 border-blue-200 pl-4">
-                  {article.summary}
+                  {safeString(article.summary)}
                 </p>
               </div>
             )}
@@ -71,10 +72,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            {article.content ? (
+            {safeString(article.content) ? (
               <div 
                 className="text-slate-700 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: article.content }}
+                dangerouslySetInnerHTML={{ __html: safeString(article.content) as string }}
               />
             ) : (
               <div className="text-center py-12">
